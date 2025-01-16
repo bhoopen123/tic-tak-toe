@@ -1,7 +1,8 @@
 ﻿
-using TicTacTooGame.Exceptions;
+using TicTacToeConsole.Exceptions;
+using TicTacToeConsole.Strategies;
 
-namespace TicTacTooGame.Models
+namespace TicTacToeConsole.Models
 {
     public class Builder
     {
@@ -23,12 +24,10 @@ namespace TicTacTooGame.Models
         public Game BuildGame()
         {
             // Validations
-
             ValidateGameParameters();
 
-
             Board board = new Board(BoardSize);
-            GameWinningStrategy gameWinningStrategy = new GameWinningStrategy();
+            IGameWinningStrategy gameWinningStrategy = new OrderOneGameWinningStrategy(BoardSize);
 
             Game game = new Game(board, Players, gameWinningStrategy);
 

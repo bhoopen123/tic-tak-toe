@@ -1,4 +1,4 @@
-﻿namespace TicTacTooGame.Models
+﻿namespace TicTacToeConsole.Models
 {
     public enum BotDifficultyLevel
     {

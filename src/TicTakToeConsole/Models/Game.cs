@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿using TicTacToeConsole.Strategies;
 
-namespace TicTacTooGame.Models
+namespace TicTacToeConsole.Models
 {
     public class Game
     {
@@ -16,10 +11,10 @@ namespace TicTacTooGame.Models
 
         private int NextPlayerIndex;
 
-        public GameWinningStrategy GameWinningStrategy { get; private set; }
+        public IGameWinningStrategy GameWinningStrategy { get; private set; }
         public Player? Winner { get; private set; }
 
-        public Game(Board board, List<Player> players, GameWinningStrategy gameWinningStrategy)
+        public Game(Board board, List<Player> players, IGameWinningStrategy gameWinningStrategy)
         {
             Board = board;
             Players = players;
@@ -34,6 +29,8 @@ namespace TicTacTooGame.Models
             GameStatus = GameStatus.InProgress;
         }
 
+
+        // TODO: 
         public void Undo()
         {
 
@@ -41,7 +38,34 @@ namespace TicTacTooGame.Models
 
         public void MakeNextMove()
         {
+            Player toMovePlayer = Players[NextPlayerIndex];
+            Console.WriteLine($"This is {toMovePlayer.Name}'s turn.");
+            Move move = toMovePlayer.DecideMove(Board);
 
+            int rowIndex = move.Cell.Row;
+            int colIndex = move.Cell.Col;
+
+            Board.Canvas[rowIndex][colIndex].SetPlayer(toMovePlayer);
+            Console.WriteLine($"Move happened at [{rowIndex}, {colIndex}].");
+
+            Moves.Add(move);
+
+            // Check if the game is Over
+            if (GameWinningStrategy.CheckWinner(Board, toMovePlayer, move.Cell))
+            {
+                GameStatus = GameStatus.EndInWin;
+                Winner = toMovePlayer;
+            }
+
+            NextPlayerIndex++;
+            NextPlayerIndex %= Players.Count;
+
+
+        }
+
+        public void Display()
+        {
+            Board.Display();
         }
 
         public static Builder GetBuilder()

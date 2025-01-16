@@ -1,4 +1,4 @@
-﻿namespace TicTacTooGame.Models
+﻿namespace TicTacToeConsole.Models
 {
     public class GameWinningStrategy
     {

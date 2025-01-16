@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TicTacTooGame.Exceptions
+namespace TicTacToeConsole.Exceptions
 {
     public class InvalidGameConstructorParameterException : Exception
     {

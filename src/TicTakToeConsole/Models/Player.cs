@@ -1,4 +1,4 @@
-﻿namespace TicTacTooGame.Models
+﻿namespace TicTacToeConsole.Models
 {
     public class Player
     {
@@ -15,7 +15,14 @@
 
         public virtual Move DecideMove(Board board)
         {
-            return null;
+            Console.WriteLine("Please provide cell location RowIndex, ColIndex.");
+            var input = Console.ReadLine();
+            int[] cellLocation = input!.Split(',').Select(c => Convert.ToInt32(c)).ToArray();
+
+            // TODO: Vaidate if the provided cell is empty
+            var cell = new Cell(cellLocation[0], cellLocation[1]);
+            cell.CellState = CellState.Full;
+            return new Move(this, cell);
         }
     }
 }

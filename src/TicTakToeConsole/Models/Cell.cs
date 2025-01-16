@@ -1,4 +1,4 @@
-﻿namespace TicTacTooGame.Models
+﻿namespace TicTacToeConsole.Models
 {
     public class Cell
     {
@@ -6,11 +6,17 @@
         public int Col { get; private set; }
         public Player Player { get; private set; }
         public CellState CellState { get; set; }
-        public Cell(Player player, int row, int col)
+        public Cell(int row, int col)
         {
-            Player = player;
             Row = row;
             Col = col;
+            CellState = CellState.Empty;
+        }
+
+        public void SetPlayer(Player player)
+        {
+            Player = player;
+            CellState = CellState.Full;
         }
 
     }

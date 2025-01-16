@@ -1,6 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-using TicTacTooGame.Models;
+using TicTacToeConsole.Controllers;
+using TicTacToeConsole.Models;
 
 Console.WriteLine("Hello, in Tic Tac Toe game world!");
 
@@ -33,4 +34,47 @@ for (int i = 0; i < toIterate; i++)
     //TODO: Add validation for already taken symbol
 
     Players.Add(new Player(name, symbol, PlayerType.Human));
+}
+
+GameController gameController = new GameController();
+var game = gameController.CreateGame(boardSize, Players);
+if (game == null)
+{
+    Console.WriteLine("Failed to create the Game, please try again..");
+    return;
+}
+
+// starting the Game
+game.Start();
+
+while (game.GameStatus.Equals(GameStatus.InProgress))
+{
+    Console.WriteLine("Current board looks like: ");
+    game.Display();
+
+    Console.WriteLine("Do you want to do an undo? y/n");
+    char isUndo = Console.ReadKey().KeyChar;
+
+    if (isUndo.Equals('y'))
+    {
+        gameController.Undo(game);
+    }
+    else
+    {
+        gameController.NextMove(game);
+    }
+}
+
+// draw or ended
+Console.WriteLine("Game has Ended. The result was: ");
+if (game.GameStatus.Equals(GameStatus.EndInWin))
+{
+    Console.WriteLine("The winner is: " + game.Winner?.Name);
+    game.Display();
+}
+
+else if (game.GameStatus.Equals(GameStatus.EndInTie))
+{
+    Console.WriteLine("The Game is tie");
+    game.Display();
 }

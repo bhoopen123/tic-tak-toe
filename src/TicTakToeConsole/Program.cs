@@ -1,5 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
+using System.Reflection;
 using TicTacToeConsole.Controllers;
 using TicTacToeConsole.Models;
 
@@ -63,18 +64,23 @@ while (game.GameStatus.Equals(GameStatus.InProgress))
     {
         gameController.NextMove(game);
     }
-}
 
-// draw or ended
-Console.WriteLine("Game has Ended. The result was: ");
-if (game.GameStatus.Equals(GameStatus.EndInWin))
-{
-    Console.WriteLine("The winner is: " + game.Winner?.Name);
-    game.Display();
-}
 
-else if (game.GameStatus.Equals(GameStatus.EndInTie))
-{
-    Console.WriteLine("The Game is tie");
-    game.Display();
+    // draw or ended
+    if (game.GameStatus.Equals(GameStatus.EndInWin))
+    {
+        Console.WriteLine("Game has Ended: ");
+        Console.WriteLine("The winner is: " + game.Winner?.Name);
+        game.Display();
+
+        break;
+    }
+
+    else if (game.GameStatus.Equals(GameStatus.EndInTie))
+    {
+        Console.WriteLine("The Game has Ended in Tie.");
+        game.Display();
+
+        break;
+    }
 }

@@ -59,8 +59,6 @@ namespace TicTacToeConsole.Models
 
             NextPlayerIndex++;
             NextPlayerIndex %= Players.Count;
-
-
         }
 
         public void Display()
